@@ -23,6 +23,35 @@ userRoute.post('/', expressAsync( async(req, res)=> {
     res.send(createdUser)
 }))
 
+// updating user information 
+userRoute.put('/:id', expressAsync( async(req, res)=> {
+    const id = req.params.id;
+    const updatedUser = await User.findByIdAndUpdate({_id: id}, req.body)
+    const sendUpdateUser = await User.findOne({_id: id})
+    res.send(sendUpdateUser)
+}))
+
+// // updating user alternate method
+// userRoute.put(
+//     '/profile',
+//     isAuth,
+//     expressAsyncHandler(async (req, res) => {
+//       const user = await User.findById(req.user._id);
+//       if (user) {
+//         user.name = req.body.name || user.name;
+//         user.email = req.body.email || user.email; }
+//         const updatedUser = await user.save();
+//         res.send({
+//           _id: updatedUser._id,
+//           name: updatedUser.name,
+//           email: updatedUser.email,
+//           isAdmin: updatedUser.isAdmin,
+//         });
+//       }
+//     })
+//   );
+
+
 // deleting a user 
 userRoute.delete('/:id', expressAsync( async(req, res)=> {
     const id = req.params.id;
